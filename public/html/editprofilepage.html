@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 topnav">
+      <div class="col-xs-2">
+        <div class="row">
+          <div class="topnavLogo">
+            <span class="glyphicon glyphicon-user topnavLogoIcon"></span> FaceSpace
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2">
+        <div class="row">
+          <div class="topnavItem">
+            <a ng-click="clearAndBack()" class="topnavLink"><span class="glyphicon glyphicon-home itemLogo"></span>Back to my Profile</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <div class="row text-right">
+          <div class="topnavItem">
+            <a ng-click="logout()" class="topnavLink"><span class="glyphicon glyphicon-road itemLogo"></span>Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <div class="row text-center">
+        <div class="panel panel-default profilePanel">
+          <h4>Edit user:</h4>
+          <div class="col-xs-12 text-center">
+            <img ng-src="{{ editedUser.profileImg }}" class="edtImg">
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 pullcenter">
+              <form class="form-horizontal" role="form" ng-submit="edit()">
+                <div class="form-group">
+                  <label class="control-label col-sm-2">Username:</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Enter a username" ng-model="editedUser.username" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-2">Password:</label>
+                  <div class="col-sm-4">
+                    <input type="password" class="form-control" placeholder="Enter a new password" ng-model="editedUser.password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-2">Biography:</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Enter a Biography" ng-model="editedUser.biography">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-2">Profile Image(Url):</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Enter a url for profile image" ng-model="editedUser.profileImg">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-2">Website:</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Enter a website" ng-model="editedUser.website">
+                  </div>
+                </div>
+                <div class="col-sm-8">
+                  <button class="btn btn-warning" ng-click="clearAndBack()">Cancel</button>
+                  <button class="btn btn-success" type="submit">Edit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

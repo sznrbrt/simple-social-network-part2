@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 topnav">
+      <div class="col-xs-2">
+        <div class="row">
+          <div class="topnavLogo">
+            <span class="glyphicon glyphicon-user topnavLogoIcon"></span> FaceSpace
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-1">
+        <div class="row">
+          <div class="topnavItem">
+            <a ui-sref='profilepage' class="topnavLink"><span class="glyphicon glyphicon-home itemLogo"></span>My Profile</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2">
+        <div class="row">
+          <div class="topnavItem">
+            <a ui-sref='people' class="topnavLink active"><span class="glyphicon glyphicon-user itemLogo"></span>People</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-7">
+        <div class="row text-right">
+          <div class="topnavItem">
+            <a ng-click="logout()" class="topnavLink"><span class="glyphicon glyphicon-road itemLogo"></span>Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="list-group">
+            <a ng-click="openProfile(person._id)" class="list-group-item" ng-repeat='person in people'><img class="smallTumbN" ng-src="{{person.profileImg}}" alt="">{{ person.username }} - Click to open profile!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

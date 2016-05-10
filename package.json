@@ -1,0 +1,26 @@
+{
+  "name": "simple-social-network-part2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "postinstall": "bower i"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "bower": "^1.7.9",
+    "cookie-parser": "^1.4.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^6.2.0",
+    "jwt-simple": "^0.5.0",
+    "mongoose": "^4.4.15",
+    "morgan": "^1.7.0",
+    "request": "^2.72.0",
+    "satellizer": "^0.14.0"
+  }
+}

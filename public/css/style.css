@@ -1,0 +1,210 @@
+body {
+  font-family: 'Asap', sans-serif;
+}
+
+.center {
+   width: 768px;
+   height: 300px;
+   position: absolute;
+   left: 40%;
+   top: 40%;
+   margin-left: -150px;
+   margin-top: -150px;
+}
+
+body {
+   background-color: #C4B9BC;
+}
+
+.logo {
+   color:#582D31;
+   position: relative;
+   left: 57px;
+   margin-bottom: 40px;
+}
+
+.logoIcon {
+   margin-right: 10px;
+   font-size: 1.5em;
+   position: relative;
+   top: 10px;
+}
+
+.logIn {
+   padding: 10px 230px;
+   background-color: transparent;
+   margin-bottom: 20px;
+   background-color: #DC4B46;
+   color:white;
+   font-size: 2.5em;
+   border: 3px solid #DC4B46;
+}
+
+.logIn:hover {
+   padding: 10px 230px;
+   background-color: transparent;
+   margin-bottom: 20px;
+   background-color: #582D31;
+   color:white;
+   font-size: 2.5em;
+   border: 3px solid #582D31;
+}
+
+.signUp {
+   padding: 10px 218px;
+   background-color: transparent;
+   margin-bottom: 20px;
+   color: #DC4B46;
+   font-size: 2.5em;
+   border: 3px solid #DC4B46;
+}
+.signUp:hover {
+   padding: 10px 218px;
+   background-color: #582D31;
+   margin-bottom: 20px;
+   color: white;
+   font-size: 2.5em;
+   border: 3px solid #582D31;
+}
+
+.signUpPanel {
+   position: relative;
+   left: 83px;
+   color: #433B3E;
+}
+
+.signUpPanelLabel {
+   position: relative;
+   left: 100px;
+   margin-bottom: 20px;
+}
+.logInPanelLabel {
+   position: relative;
+   left: 140px;
+   margin-bottom: 20px;
+}
+
+.signUpBtn {
+   background-color: #DC4B46;
+   margin-bottom: 300px;
+   position: relative;
+   left: 70px;
+}
+
+.logInBtn {
+   background-color: #DC4B46;
+   position: relative;
+   left: 60px;
+   margin-bottom: 30px;
+}
+
+.clearBtn {
+   display: none;
+}
+
+.scsMsg {
+   color:green;
+   left: -10px;
+}
+
+.topnav {
+   height: 50px;
+   background-color:#DC4B46;
+}
+
+.topnavLogo {
+   line-height: 50px;
+   vertical-align: middle;
+   color: white;
+   font-size: 1.3em;
+}
+
+.topnavLogoIcon {
+   margin-right: 5px;
+}
+
+.topnavItem {
+  line-height: 50px;
+  vertical-align: middle;
+  color: white;
+  font-size: 1em;
+}
+
+.topnavLink {
+  line-height: 50px;
+  vertical-align: middle;
+  color: white;
+  font-size: 1em;
+}
+
+.topnavLink:hover {
+  color: black;
+}
+
+.itemLogo {
+  margin-right: 5px;
+}
+
+.active {
+  color:black;
+}
+
+.profilePanel {
+  margin: 10px 50px;
+}
+
+.editButton {
+  margin-top: 10px;
+}
+
+.glyphicon-pencil {
+  margin-right: 5px;
+}
+
+.profileImg {
+  border-radius: 3px;
+}
+
+.profileImg {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  top: 17px;
+}
+
+.profileImgPers {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  top: 2px;
+}
+
+.edtImg {
+  border-radius: 5px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 30px;
+}
+
+.pullcenter {
+  position: relative;
+  right: -150px;
+}
+
+.infoItem {
+  margin-bottom: 10px;
+}
+
+.list-group {
+  margin: 10px 50px;
+}
+
+.smallTumbN {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.fa {
+  margin-right: 5px;
+}
