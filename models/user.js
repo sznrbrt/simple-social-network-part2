@@ -44,6 +44,82 @@ userSchema.statics.isLoggedIn = function(req, res, next) {
   });
 };
 
+userSchema.statics.sendRequest = function(userId1, userId2, cb) {
+  if(userId1 === userId2) {
+    return cb({error: "You can't be your own friend!"})
+  }
+  User.findById(userId1, (err1, user1) => {
+    User.findById(userId2, (err2, user2) => {
+      if(err1 || err2) if(err1 || err2) return cb(err1 || err2);
+      var user2HasFriendReq = user2.friendrequests.indexOf(user1._id) !== -1;
+
+      if(user2HasFriendReq) {
+        return cb({error: "Request has been already sent!"});
+      }
+
+      user2.friendrequests.push(user1._id);
+
+      user1.save(err => {
+        user2.save(err => {
+          cb(err1 || err2);
+        })
+      })
+    });
+  });
+}
+
+userSchema.statics.acceptRequest = function(userId1, userId2, cb) {
+  if(userId1 === userId2) {
+    return cb({error: "You can't be your own friend!"})
+  }
+  User.findById(userId1, (err1, user1) => {
+    User.findById(userId2, (err2, user2) => {
+      if(err1 || err2) if(err1 || err2) return cb(err1 || err2);
+      var user1HasFriendReq = user1.friendrequests.indexOf(user2._id) !== -1;
+      var idx = user1.friendrequests.indexOf(user2._id);
+      if(!user1HasFriendReq) {
+        return cb({error: "Error occured, there was no request! Sorry."});
+      }
+
+      user1.friendrequests.splice(idx, 1);
+      user1.friends.push(user2._id);
+      user2.friends.push(user1._id);
+
+      user1.save(err => {
+        user2.save(err => {
+          cb(err1 || err2);
+        })
+      })
+    });
+  });
+}
+
+userSchema.statics.removeFriend = function(userId1, userId2, cb) {
+  if(userId1 === userId2) {
+    return cb({error: "You can't unfriend yourself!"})
+  }
+  User.findById(userId1, (err1, user1) => {
+    User.findById(userId2, (err2, user2) => {
+      if(err1 || err2) if(err1 || err2) return cb(err1 || err2);
+
+      var isFriend = user1.friends.indexOf(user2._id) !== -1;
+      if(!isFriend) return cb({error: "You aren't friends."});
+
+      var idxUser1 = user1.friends.indexOf(user2._id);
+      var idxUser2 = user2.friends.indexOf(user1._id);
+
+      user1.friends.splice(idxUser1, 1);
+      user2.friends.splice(idxUser2, 1);
+
+      user1.save(err => {
+        user2.save(err => {
+          cb(err1 || err2);
+        })
+      })
+    });
+  });
+}
+
 userSchema.statics.register = function(userObj, cb) {
   this.create(userObj, cb);
 };

@@ -6,6 +6,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider){
   $authProvider.github({
     clientId: '48012540038bc7efae7f'
   });
+
   $authProvider.facebook({
     clientId: '477809465676872'
   });

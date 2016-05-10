@@ -61,4 +61,25 @@ router.get('/people/:id', User.isLoggedIn, (req, res) => {
   })
 })
 
+// /api/users/people
+router.post('/:userId1/friendRequest/:userId2', User.isLoggedIn, (req, res) => {
+  User.sendRequest(req.params.userId1, req.params.userId2, (err) => {
+    return err ? res.status(400).send(err) : res.send('Friend request sent.');
+  })
+})
+
+// /api/users/people
+router.post('/:userId1/acceptRequest/:userId2', User.isLoggedIn, (req, res) => {
+  User.acceptRequest(req.params.userId1, req.params.userId2, (err) => {
+    return err ? res.status(400).send(err) : res.send('They\'ve become friends.');
+  })
+})
+
+// /api/users/people
+router.post('/:userId1/removeFriend/:userId2', User.isLoggedIn, (req, res) => {
+  User.removeFriend(req.params.userId1, req.params.userId2, (err) => {
+    return err ? res.status(400).send(err) : res.send('They\'re no friend anymore.');
+  })
+})
+
 module.exports = router;
