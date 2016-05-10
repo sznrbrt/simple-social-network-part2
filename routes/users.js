@@ -19,10 +19,10 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  User.authenticate(req.body, (err, token) => {
+  User.authenticate(req.body, (err, token, id) => {
     if(err) return res.status(400).send(err);
 
-    res.cookie('accessToken', token).send(token);
+    res.cookie('accessToken', token).send(id);
   });
 });
 
@@ -32,7 +32,6 @@ router.delete('/logout', (req, res) => {
 
 // /api/users/profile
 router.get('/profile', User.isLoggedIn, (req, res) => {
-  console.log('req.user:', req.user);
   res.send(req.user);
 })
 
@@ -56,26 +55,33 @@ router.get('/people', User.isLoggedIn, (req, res) => {
 
 // /api/users/people
 router.get('/people/:id', User.isLoggedIn, (req, res) => {
-  User.findById(req.params.id).exec((err, user) => {
+  User.findById(req.params.id).populate('friends').exec((err, user) => {
     return err ? res.status(400).send(err) : res.send(user);
-  })
+  });
 })
 
-// /api/users/people
+// /api/users/
 router.post('/:userId1/friendRequest/:userId2', User.isLoggedIn, (req, res) => {
   User.sendRequest(req.params.userId1, req.params.userId2, (err) => {
     return err ? res.status(400).send(err) : res.send('Friend request sent.');
   })
 })
 
-// /api/users/people
+// /api/users/
 router.post('/:userId1/acceptRequest/:userId2', User.isLoggedIn, (req, res) => {
   User.acceptRequest(req.params.userId1, req.params.userId2, (err) => {
     return err ? res.status(400).send(err) : res.send('They\'ve become friends.');
   })
 })
 
-// /api/users/people
+// /api/users/
+router.post('/:userId1/declineRequest/:userId2', User.isLoggedIn, (req, res) => {
+  User.declineRequest(req.params.userId1, req.params.userId2, (err) => {
+    return err ? res.status(400).send(err) : res.send('Declined request!');
+  })
+})
+
+// /api/users/
 router.post('/:userId1/removeFriend/:userId2', User.isLoggedIn, (req, res) => {
   User.removeFriend(req.params.userId1, req.params.userId2, (err) => {
     return err ? res.status(400).send(err) : res.send('They\'re no friend anymore.');

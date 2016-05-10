@@ -49,6 +49,9 @@
               <div class="row infoItem">
                 Biography: {{myprofile.biography}}
               </div>
+              <div class="row infoItem">
+                Friends: <span ng-repeat="friend in myprofile.friends"><a href="">{{ friend.username }}</a> </span>
+              </div>
               <div class="row">
                 <button class="btn btn-danger editButton" ng-click="editProfile()">
                   <span class="glyphicon glyphicon-pencil"></span>Edit Profile
@@ -58,6 +61,18 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 text-left">
+      <h4>Friend requests:</h4>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="friend in myprofile.friendrequests">
+          {{ friend.username }}
+          <button class="btn btn-sm btn-success" ng-click="acceptRequest(friend._id)">Accept</button>
+          <button class="btn btn-sm btn-danger" ng-click="declineRequest(friend._id)">Decline</button>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

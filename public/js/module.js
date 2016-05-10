@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('socialApp', ['ui.router', 'ui.bootstrap', 'satellizer']);
+var app = angular.module('socialApp', ['ui.router', 'ui.bootstrap', 'satellizer', 'ngStorage']);
 
 app.config(function($stateProvider, $urlRouterProvider, $authProvider){
   $authProvider.github({

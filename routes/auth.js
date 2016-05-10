@@ -34,7 +34,7 @@ router.post('/github', (req, res) => {
         if(err) return res.status(400).send(err);
         if(existingUser) {
           var token = existingUser.makeToken();
-          res.cookie('accessToken', token).send(token);
+          res.cookie('accessToken', token).send(existingUser._id);
           // res.send({ token: token });
         } else {
           var user = new User();
@@ -42,7 +42,7 @@ router.post('/github', (req, res) => {
 
           user.save((err, savedUser) => {
             var token = savedUser.makeToken();
-            res.cookie('accessToken', token).send(token);
+            res.cookie('accessToken', token).send(savedUser._id);
           });
         }
       });
@@ -70,20 +70,19 @@ router.post('/facebook', (req, res) => {
       if (response.statusCode !== 200) {
         return res.status(500).send({ message: profile.error.message });
       }
-      // Create a new user account or return an existing one.
+      // Step 3. Create a new user account or return an existing one.
       User.findOne({ facebook: profile.id }, function(err, existingUser) {
         if (existingUser) {
           var token = existingUser.makeToken();
           console.log('createdToken:', token);
-          return res.cookie('accessToken', token).send(token);
+          return res.cookie('accessToken', token).send(existingUser._id);
         }
         var user = new User();
         user.facebook = profile.id;
-        user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
-        user.displayName = profile.name;
+        user.profileImg = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
         user.save(function() {
           var token = user.makeToken;
-          res.cookie('accessToken', token).send(token);
+          res.cookie('accessToken', token).send(user._id);
         });
       });
     });

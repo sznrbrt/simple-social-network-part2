@@ -2,7 +2,7 @@
 
 var app = angular.module('socialApp');
 
-app.controller('homeCtrl', function($scope, Users, $state, $auth) {
+app.controller('homeCtrl', function($scope, Users, $state, $auth, $localStorage) {
   console.log('homeCtrl');
   $scope.signUpPanel = false;
   $scope.newUser = {};
@@ -12,7 +12,8 @@ app.controller('homeCtrl', function($scope, Users, $state, $auth) {
 
   $scope.authenticate = provider => {
     $auth.authenticate(provider)
-    .then(function(response) {
+    .then(function(res) {
+        $localStorage.currentUser = res.data;
         $state.go('profilepage');
       })
       .catch(function(response) {
@@ -48,7 +49,7 @@ app.controller('homeCtrl', function($scope, Users, $state, $auth) {
   }
 });
 
-app.controller('profilepageCtrl', function($scope, Users, $state, StoreData) {
+app.controller('profilepageCtrl', function($scope, Users, $state, StoreData, $localStorage) {
   console.log('profilepageCtrl');
   $scope.myprofile = {};
 
@@ -68,6 +69,31 @@ app.controller('profilepageCtrl', function($scope, Users, $state, StoreData) {
   $scope.editProfile = function() {
     StoreData.set($scope.myprofile);
     $state.go('editprofilepage')
+  }
+
+  $scope.acceptRequest = (id) => {
+    var id2 = id;
+    var id1 = $localStorage.currentUser;
+    Users.acceptRequest(id1, id2)
+      .then((res) => {
+        Users.loadprofile()
+          .then((res) => {
+            $scope.myprofile = res.data;
+            if(!res.data.profileImg) $scope.myprofile.profileImg = "http://placehold.it/100x100";
+          })
+      })
+  }
+  $scope.declineRequest = (id) => {
+    var id2 = id;
+    var id1 = $localStorage.currentUser;
+    Users.declineRequest(id1, id2)
+      .then((res) => {
+        Users.loadprofile()
+          .then((res) => {
+            $scope.myprofile = res.data;
+            if(!res.data.profileImg) $scope.myprofile.profileImg = "http://placehold.it/100x100";
+          })
+      })
   }
 });
 
@@ -116,19 +142,48 @@ app.controller('peopleCtrl', function($scope, Users, $state, StoreData) {
   }
 });
 
-app.controller('personCtrl', function($scope, Users, $state, StoreData, $stateParams) {
+app.controller('personCtrl', function($scope, Users, $state, StoreData, $stateParams, $localStorage) {
   console.log('personCtrl');
-  $scope.person = {};
 
-  Users.getPerson($stateParams.userId)
+  function renderPage() {
+    Users.getPerson($stateParams.userId)
     .then((res) => {
       $scope.person = res.data;
+      $scope.isNotMyFriend = $scope.person.friends.filter((friend) => {
+        return friend._id === $scope.currentUser;
+      }).length === 0;
+      $scope.isNotRequested = $scope.person.friendrequests.filter((friend) => {
+        return friend === $scope.currentUser;
+      }).length === 0;
     })
+  }
+
+  $scope.person = {};
+  $scope.currentUser = $localStorage.currentUser;
+  $scope.isNotMyFriend = true;
+  renderPage();
 
   $scope.logout = function() {
     Users.logout()
       .then((res) => {
         $state.go('home');
+      })
+  }
+
+  $scope.sendRequest = () => {
+    Users.sendRequest($scope.currentUser, $scope.person._id)
+      .then((res) => {
+        console.log(res.data);
+        renderPage();
+      })
+  }
+
+  $scope.removeFriend = () => {
+    var id1 = $scope.currentUser;
+    var id2 = $scope.person._id;
+    Users.removeFriend(id1, id2)
+      .then((res) => {
+        renderPage();
       })
   }
 });

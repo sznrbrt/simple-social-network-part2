@@ -42,6 +42,20 @@
               <div class="row infoItem">
                 Biography: {{person.biography}}
               </div>
+              <div class="row infoItem">
+                Friends: <span ng-show="person.friends.length === 0"> No friends.</span>
+                <ul ng-hide="person.friends.length === 0">
+                  <li>
+                    <span ng-repeat="friend in person.friends"><a href=""> {{friend.username}} </a></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="row infoItem">
+                <button class="btn btn-sm btn-primary" ng-if="isNotMyFriend && isNotRequested" ng-click="sendRequest()">Send friend request</button>
+                <button class="btn btn-sm btn-success" ng-if="!isNotRequested">Friend request sent!</button>
+                <button class="btn btn-sm btn-success" ng-if="!isNotMyFriend">Already a friend!</button>
+                <button class="btn btn-sm btn-danger" ng-if="!isNotMyFriend" ng-click="removeFriend()">Remove from friends!</button>
+              </div>
             </div>
           </div>
         </div>

@@ -32,6 +32,8 @@ userSchema.statics.isLoggedIn = function(req, res, next) {
 
     User
       .findById(payload._id)
+      .populate('friendrequests')
+      .populate('friends')
       .select({password: false})
       .exec((err, user) => {
         if(err || !user) {
@@ -94,6 +96,30 @@ userSchema.statics.acceptRequest = function(userId1, userId2, cb) {
   });
 }
 
+userSchema.statics.declineRequest = function(userId1, userId2, cb) {
+  if(userId1 === userId2) {
+    return cb({error: "You can't be your own friend!"})
+  }
+  User.findById(userId1, (err1, user1) => {
+    User.findById(userId2, (err2, user2) => {
+      if(err1 || err2) if(err1 || err2) return cb(err1 || err2);
+      var user1HasFriendReq = user1.friendrequests.indexOf(user2._id) !== -1;
+      var idx = user1.friendrequests.indexOf(user2._id);
+      if(!user1HasFriendReq) {
+        return cb({error: "Error occured, there was no request! Sorry."});
+      }
+
+      user1.friendrequests.splice(idx, 1);
+
+      user1.save(err => {
+        user2.save(err => {
+          cb(err1 || err2);
+        })
+      })
+    });
+  });
+}
+
 userSchema.statics.removeFriend = function(userId1, userId2, cb) {
   if(userId1 === userId2) {
     return cb({error: "You can't unfriend yourself!"})
@@ -142,7 +168,7 @@ userSchema.statics.authenticate = function(userObj, cb) {
 
     var token = dbUser.makeToken();
 
-    cb(null, token);
+    cb(null, token, dbUser._id);
   });
 };
 
