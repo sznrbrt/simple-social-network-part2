@@ -35,7 +35,6 @@ router.post('/github', (req, res) => {
         if(existingUser) {
           var token = existingUser.makeToken();
           res.cookie('accessToken', token).send(existingUser._id);
-          // res.send({ token: token });
         } else {
           var user = new User();
           user.github = profile.id;
